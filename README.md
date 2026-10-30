@@ -1,23 +1,49 @@
-
 # E-Commerce Customer & Product Analytics
 
-## Executive Business Summary
+Customer segmentation (RFM K-Means Clustering) and market basket analysis (Apriori Association Rules) on UK online retail transactions, with data-driven business recommendations for marketing and cross-selling.
 
-### Phase 1: Project Analytics Dashboard Metrics
-* **Total Customer Baskets Processed:** 14155 UK orders
-* **Unique Products Evaluated:** 150 items
-* **Algorithm Hyperparameters:** Minimum Support baseline set at `0.02` (2%) and Minimum Lift threshold set at `1.2`.
-* **Core Target Segment:** **Champions and Loyal Customers**. Because these segments possess the highest individual average order values (AOV) and purchase frequencies, they should be targeted with cross-selling product bundles to maximize profit margins.
+## Business Problem
+An online retailer wants to isolate its highest-value customer brackets, detect at-risk drifting clients, and discover high-affinity product relationships to optimize targeted marketing campaigns and checkout recommendations.
 
-### Phase 2: Behavioral Cross-Selling Rules & Business Actions
-* **Rule 1: Green Regency Teacup → Pink Regency Teacup**
-  * *Insight:* Customers who buy a Green Regency Teacup also buy a Pink Regency Teacup in **75.4%** of cases, which is **15.2x** more likely than random chance.
-  * *Action:* Bundle these items as a multi-color set on the checkout screen to instantly increase average order sizes.
-* **Rule 2: Alarm Clock Bakelite Red → Alarm Clock Bakelite Green**
-  * *Insight:* Customers who buy a Red Alarm Clock also buy a Green Alarm Clock in **62.1%** of cases, which is **11.4x** more likely than random chance.
-  * *Action:* Trigger a dynamic suggestion panel showing the Green variation right on the Red clock's item description page.
-* **Rule 3: Jumbo Bag Pink Polkadot → Jumbo Bag Red Retrospot**
-  * *Insight:* Customers who buy a Jumbo Pink Bag also buy a Jumbo Red Bag in **58.7%** of cases, which is **8.3x** more likely than random chance.
-  * *Action:* Offer a small "frequently bought together" package discount when both storage bags are added to the cart simultaneously.
+## Dataset
+[E-Commerce Data on Kaggle](https://kaggle.com) (UCI Online Retail Archive): Contains 541,909 raw transaction entries from Dec 2010 to Dec 2011. 
+*Note: The raw data file is omitted from tracking via `.gitignore`. Download directly from Kaggle and place inside `data/`.*
 
-*Note for Interviews: These association rules show products frequently bought together as behavioral trends; they suggest high-affinity buying patterns rather than proving direct psychological cause and effect.*
+## Tools
+Python, Pandas, NumPy, Matplotlib, Seaborn, Plotly, scikit-learn, mlxtend, Jupyter
+
+## Methodology
+1. **Cleaning:** Dropped missing CustomerIDs, duplicates, transactional returns, and zero-value logs ($541,909 \rightarrow 392,692$ verified rows).
+2. **EDA:** Plotted continuous monthly revenue streams, isolated high-volume country distributions, and mapped hourly demand density.
+3. **RFM Features:** Engineered Recency, Frequency, and Monetary scores mapped to individual Customer IDs.
+4. **K-Means Clustering:** Handled outlier skewness via Log-Transform and StandardScaler, setting an optimal hyperparameter baseline of $k=4$ using Elbow and Silhouette co-efficiency visuals.
+5. **Association Rules:** Ran the Apriori pattern engine on UK orders across the top 150 products with a minimum support baseline of 0.02.
+
+## Key Findings
+- Total Cleaned Revenue: £[Insert total revenue from Cell 4] across [Insert unique customers count from Cell 4] buyers.
+- Revenue trends peak significantly in November, with the United Kingdom generating [Insert UK share % from Cell 7] of total income.
+- **Champions & Loyal Segments** make up the minority of customer volume but generate over [Insert combined revenue % from Cell 15] of total corporate income.
+- Top Product Pair: [Insert Antecedent] + [Insert Consequent] (Confidence: [X]%, Lift: [X]).
+
+![Monthly revenue](images/monthly_revenue.png)
+![Customer segments](images/segment_summary.png)
+![Association rules](images/association_rules.png)
+
+## Business Recommendations
+1. Reward Champions with tier-based loyalty access models.
+2. Deploy time-sensitive coupon win-back cadences for At-Risk users.
+3. Establish introductory automated welcome mail sets for New buyers.
+4. Bundle high-lift product configurations inside cart interfaces.
+5. Scale inventory capacity planning ahead of peak seasonal months.
+
+## How to Run
+```bash
+git clone https://github.com
+cd ecommerce-customer-product-analytics
+pip install -r requirements.txt
+# Place downloaded data.csv from Kaggle into the data/ folder
+jupyter notebook notebooks/analysis.ipynb
+```
+
+## Author
+Dasari Pallavi | https://www.linkedin.com/in/dasari-pallavi/
